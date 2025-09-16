@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Student Marks System</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Arial, sans-serif;
+      margin: 0;
+      background: #f5f6fa;
+      min-height: 100vh;
+    }
+    .container {
+      display: flex;
+      gap: 40px;
+      align-items: flex-start;
+      justify-content: center;
+      margin: 40px auto;
+      max-width: 1100px;
+      padding: 0 10px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 12px 0 rgba(31, 38, 135, 0.07);
+      padding: 28px 20px 20px 20px;
+      margin-bottom: 20px;
+      width: 100%;
+      min-width: 300px;
+    }
+    .left {
+      flex: 1.1;
+      min-width: 320px;
+    }
+    .right {
+      flex: 1;
+      min-width: 320px;
+    }
+    .left h2 {
+      background: none;
+      box-shadow: none;
+      padding: 0 0 18px 0;
+      margin: 0 0 10px 0;
+      color: #444;
+      border-radius: 0;
+      text-align: left;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+    table {
+      border-collapse: collapse;
+      width: 100%;
+      margin-bottom: 20px;
+      background: #f8f9fa;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    }
+    th, td {
+      border: none;
+      padding: 12px 10px;
+      text-align: left;
+      font-size: 1.05em;
+    }
+    th {
+      background: #dee2e6;
+      color: #333;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    tr:nth-child(even) td {
+      background: #f1f3f6;
+    }
+    tr:nth-child(odd) td {
+      background: #fff;
+    }
+    .controls-table {
+      width: 100%;
+      margin-bottom: 20px;
+      background: transparent;
+      box-shadow: none;
+    }
+    .controls-table td {
+      border: none;
+      padding: 8px 0;
+      text-align: left;
+      background: none;
+    }
+    .controls-table input, .controls-table button {
+      width: 95%;
+      box-sizing: border-box;
+    }
+    button {
+      margin: 4px 0;
+      padding: 9px 0;
+      border-radius: 6px;
+      border: none;
+      background: #bfc9d1;
+      color: #222;
+      font-size: 1em;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 4px rgba(191,201,209,0.08);
+    }
+    button:hover {
+      background: #adb5bd;
+      color: #111;
+      box-shadow: 0 2px 8px rgba(173,181,189,0.13);
+    }
+    input[type="text"], input[type="number"] {
+      padding: 9px 10px;
+      border-radius: 6px;
+      border: 1.5px solid #cfd8dc;
+      font-size: 1em;
+      background: #f7fafd;
+      transition: border 0.2s, box-shadow 0.2s;
+      outline: none;
+      margin: 0;
+    }
+    input[type="text"]:focus, input[type="number"]:focus {
+      border: 1.5px solid #adb5bd;
+      box-shadow: 0 1px 4px rgba(173,181,189,0.08);
+      background: #fff;
+    }
+    #message {
+      margin-top: 14px;
+      min-height: 32px;
+      font-size: 1.05em;
+      color: #444;
+      text-align: center;
+    }
+    .badge {
+      display: inline-block;
+      padding: 4px 13px;
+      border-radius: 14px;
+      background: #e9ecef;
+      color: #333;
+      font-weight: 500;
+      margin-left: 8px;
+      font-size: 1em;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+      cursor: pointer;
+      border: 1.5px solid #dee2e6;
+    }
+    .badge.highest {
+      background: #b5ead7;
+      color: #222;
+      border-color: #b5ead7;
+    }
+    .badge.average {
+      background: #b8d0eb;
+      color: #222;
+      border-color: #b8d0eb;
+    }
+    .badge.sorted {
+      background: #ffe5b4;
+      color: #222;
+      border-color: #ffe5b4;
+    }
+    .badge.removed {
+      background: #f7cac9;
+      color: #222;
+      border-color: #f7cac9;
+    }
+    .badge.reset {
+      background: #e2e2e2;
+      color: #222;
+      border-color: #e2e2e2;
+    }
+    .badge.added {
+      background: #d5e8d4;
+      color: #222;
+      border-color: #d5e8d4;
+    }
+    .badge:hover {
+      filter: brightness(1.08);
+      box-shadow: 0 2px 8px rgba(191,201,209,0.13);
+      border-color: #adb5bd;
+      background: #dee2e6;
+      color: #111;
+    }
+    @media (max-width: 900px) {
+      .container {
+        flex-direction: column;
+        gap: 0;
+      }
+      .left, .right {
+        width: 100%;
+        min-width: 0;
+      }
+      .card {
+        padding: 14px 4px 14px 4px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+
+
+<div class="container">
+  <div class="left card">
+    <h2>Student Marks System</h2>
+    <div style="text-align:center;color:#555;font-size:1.08em;margin-bottom:12px;">
+  A simple interactive demo to practice JavaScript arrays: add/remove/sort/calc/avg/find max.
+</div>
+<div style="text-align:center;font-size:1.08em;margin-bottom:18px;">
+  <span style="background:#e9ecef;padding:6px 18px;border-radius:14px;color:#444;font-weight:600;">
+    Total students: <span id="total"></span>
+  </span>
+</div>
+    <table>
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Marks</th>
+        </tr>
+      </thead>
+      <tbody id="studentTable"></tbody>
+    </table>
+  </div>
+
+  <!-- Right: Controls Table -->
+  <div class="right card">
+    <table class="controls-table">
+      <tr>
+        <td colspan="2">
+          <button onclick="showHighest()">Show Highest</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="showAverage()">Show Average</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="sortByMarks()">Sort by Marks ↓</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="removeLast()">Remove Last</button>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="resetSample()">Reset Sample</button>
+        </td>
+      </tr>
+      <tr>
+        <th colspan="2" style="background:#f1f3f6;color:#333;font-size:1.05em;">Add a student</th>
+      </tr>
+      <tr>
+        <td>Name:</td>
+        <td><input type="text" id="nameInput" placeholder="Student name"></td>
+      </tr>
+      <tr>
+        <td>Marks:</td>
+        <td><input type="number" id="marksInput" placeholder="Marks (0-100)"></td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <button onclick="addStudent()">Add Student</button>
+        </td>
+      </tr>
+    </table>
+    <div id="message"></div>
+  </div>
+</div>
+
+<script>
+  let students = [
+    {name: "Divya", marks: 98},
+    {name: "Karan", marks: 95},
+    {name: "Priya", marks: 92},
+    {name: "Sneha", marks: 88},
+    {name: "Amit", marks: 85},
+    {name: "Rahul", marks: 76}
+  ];
+
+  const table = document.getElementById("studentTable");
+  const total = document.getElementById("total");
+  const message = document.getElementById("message");
+
+  function renderTable() {
+    table.innerHTML = "";
+    students.forEach(s => {
+      let row = `<tr><td>${s.name}</td><td>${s.marks}</td></tr>`;
+      table.innerHTML += row;
+    });
+    total.textContent = students.length;
+  }
+
+  function showHighest() {
+    if (students.length === 0) {
+      message.innerHTML = `<span class="badge highest">No students available.</span>`;
+      return;
+    }
+    let highest = students.reduce((max, s) => s.marks > max.marks ? s : max, students[0]);
+    message.innerHTML = `Highest: <span class="badge highest">${highest.name} (${highest.marks})</span>`;
+  }
+
+  function showAverage() {
+    if (students.length === 0) {
+      message.innerHTML = `<span class="badge average">No students available.</span>`;
+      return;
+    }
+    let avg = students.reduce((sum, s) => sum + s.marks, 0) / students.length;
+    message.innerHTML = `Average Marks: <span class="badge average">${avg.toFixed(2)}</span>`;
+  }
+
+  function sortByMarks() {
+    students.sort((a, b) => b.marks - a.marks);
+    renderTable();
+    message.innerHTML = `<span class="badge sorted">Sorted by marks (highest → lowest)</span>`;
+  }
+
+  function removeLast() {
+    if (students.length === 0) {
+      message.innerHTML = `<span class="badge removed">No students to remove.</span>`;
+      return;
+    }
+    students.pop();
+    renderTable();
+    message.innerHTML = `<span class="badge removed">Removed last student.</span>`;
+  }
+
+  function resetSample() {
+    students = [
+      {name: "Divya", marks: 98},
+      {name: "Karan", marks: 95},
+      {name: "Priya", marks: 92},
+      {name: "Sneha", marks: 88},
+      {name: "Amit", marks: 85},
+      {name: "Rahul", marks: 76}
+    ];
+    renderTable();
+    message.innerHTML = `<span class="badge reset">Sample data reset.</span>`;
+  }
+
+  function addStudent() {
+    const name = document.getElementById("nameInput").value.trim();
+    const marks = parseInt(document.getElementById("marksInput").value);
+    if (name && !isNaN(marks) && marks >= 0 && marks <= 100) {
+      students.push({name, marks});
+      renderTable();
+      message.innerHTML = `<span class="badge added">${name} added with ${marks} marks.</span>`;
+      document.getElementById("nameInput").value = "";
+      document.getElementById("marksInput").value = "";
+    } else {
+      message.innerHTML = `<span class="badge removed">Please enter valid name and marks (0-100).</span>`;
+    }
+  }
+
+  renderTable();
+</script>
+
+</body>
+</html>
