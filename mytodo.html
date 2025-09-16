@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MY TO-DO LIST</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f3f3f3;
+            margin: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .input-section {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 10px;
+        }
+        #taskInput {
+            width: 250px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 8px 14px;
+            border-radius: 4px;
+            border: none;
+            background: #4CAF50;
+            color: white;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+            max-width: 400px;
+            margin: 0 auto 30px auto;
+        }
+        li {
+            background: #fff;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+        }
+        .task-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .task-actions button {
+            margin-left: 5px;
+            background: #2196F3;
+        }
+        .task-actions .delete-btn {
+            background: #f44336;
+        }
+        .done {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .classwork-section {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            max-width: 400px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 12px;
+            border-radius: 4px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.07);
+        }
+        .classwork-label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>MY TO-DO LIST</h1>
+    <div class="input-section">
+        <input type="text" id="taskInput" placeholder="Enter a new task">
+        <button onclick="addTask()">Add Task</button>
+    </div>
+    <ul id="taskList"></ul>
+
+    <div class="classwork-section" id="classworkSection">
+        <label class="classwork-label" for="work">Classwork</label>
+        <input type="checkbox" id="work" name="work" value="work">
+        <button class="delete-btn" onclick="deleteClasswork()">Delete</button>
+    </div>
+
+    <script>
+        function addTask() {
+            const taskInput = document.getElementById('taskInput');
+            const taskList = document.getElementById('taskList');
+
+            if (taskInput.value.trim() !== '') {
+                const listItem = document.createElement('li');
+
+                const contentDiv = document.createElement('div');
+                contentDiv.className = 'task-content';
+                const span = document.createElement('span');
+                span.textContent = taskInput.value;
+                const status = document.createElement('span');
+                status.textContent = ' (Pending)';
+                status.className = 'status';
+                contentDiv.appendChild(span);
+                contentDiv.appendChild(status);
+
+                const actionsDiv = document.createElement('div');
+                actionsDiv.className = 'task-actions';
+
+                const doneBtn = document.createElement('button');
+                doneBtn.textContent = 'Mark as Completed';
+                doneBtn.onclick = function() {
+                    if (span.classList.contains('done')) {
+                        span.classList.remove('done');
+                        status.textContent = ' (Pending)';
+                        doneBtn.textContent = 'Mark as Completed';
+                    } else {
+                        span.classList.add('done');
+                        status.textContent = ' (Completed)';
+                        doneBtn.textContent = 'Mark as Pending';
+                    }
+                };
+
+                const deleteBtn = document.createElement('button');
+                deleteBtn.textContent = 'Delete';
+                deleteBtn.className = 'delete-btn';
+                deleteBtn.onclick = function() {
+                    taskList.removeChild(listItem);
+                };
+
+                actionsDiv.appendChild(doneBtn);
+                actionsDiv.appendChild(deleteBtn);
+
+                listItem.appendChild(contentDiv);
+                listItem.appendChild(actionsDiv);
+
+                taskList.appendChild(listItem);
+                taskInput.value = '';
+            } else {
+                alert('Please enter a task.');
+            }
+        }
+
+        function deleteClasswork() {
+            const classworkSection = document.getElementById('classworkSection');
+            classworkSection.style.display = 'none';
+        }
+    </script>
+</body>
+</html>
