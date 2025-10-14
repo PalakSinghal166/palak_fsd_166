@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>React Tutorial</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+    <style>
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background-color: #f4f6f8;
+      }
+
+      header {
+        display: flex;
+        align-items: center;
+        background-color: #20232a;
+        color: white;
+        padding: 15px 20px;
+      }
+
+      header img {
+        height: 45px;
+        margin-right: 15px;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: 1.6rem;
+      }
+
+      .container {
+        max-width: 900px;
+        margin: 40px auto;
+        padding: 20px;
+      }
+
+      .topic-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .topic-card:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+      }
+
+      .topic-title {
+        color: #61dafb;
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+      }
+
+      .topic-detail {
+        color: #333;
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg"
+        alt="React Logo"
+      />
+      <h1>React Tutorial</h1>
+    </header>
+
+    <div id="root"></div>
+
+    <script type="text/babel">
+      const topics = [
+        {
+          title: "1. Introduction to React",
+          detail:
+            "React is a JavaScript library for building user interfaces. It helps you build reusable UI components for scalable applications.",
+        },
+        {
+          title: "2. Components and Props",
+          detail:
+            "Components are the basic building blocks of a React app. Props (short for properties) let you pass data from parent to child components.",
+        },
+        {
+          title: "3. State and Lifecycle",
+          detail:
+            "State represents dynamic data in a component. Lifecycle methods or hooks allow you to run code when components mount, update, or unmount.",
+        },
+        {
+          title: "4. Handling Events",
+          detail:
+            "React provides a clean way to handle user actions such as clicks, inputs, and form submissions using event handlers.",
+        },
+        {
+          title: "5. Conditional Rendering",
+          detail:
+            "You can render components or elements conditionally in React using simple JavaScript logic like if-else or ternary operators.",
+        },
+        {
+          title: "6. Lists and Keys",
+          detail:
+            "React can efficiently render lists of data using the map() function. Keys help React identify which items have changed or been removed.",
+        },
+        {
+          title: "7. Hooks",
+          detail:
+            "Hooks like useState and useEffect allow you to manage state and side effects in functional components without using classes.",
+        },
+        {
+          title: "8. React Router",
+          detail:
+            "React Router helps manage navigation in a single-page application (SPA) by mapping URLs to components.",
+        },
+      ];
+
+      function App() {
+        return (
+          <div className="container">
+            {topics.map((topic, index) => (
+              <div key={index} className="topic-card">
+                <div className="topic-title">{topic.title}</div>
+                <div className="topic-detail">{topic.detail}</div>
+              </div>
+            ))}
+          </div>
+        );
+      }
+
+      const root = ReactDOM.createRoot(document.getElementById("root"));
+      root.render(<App />);
+    </script>
+  </body>
+</html>

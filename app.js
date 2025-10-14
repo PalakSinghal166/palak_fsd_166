@@ -1,77 +1,53 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+
+
 
 function App() {
-  const [count, setCount] = useState(0);
-  const [verified, setVerified] = useState(false);
-  const [input, setInput] = useState("");
+  const topics = [
+    { id: 1, title: "React Basics", description: "Learn about components, JSX, and props." },
+    { id: 2, title: "React State", description: "Understand how state and hooks work in React." },
+    { id: 3, title: "React Events", description: "Handle user input and button clicks." },
+  ];
 
-  const handleVerify = () => {
-    if (input.trim().toLowerCase() === "react") {
-      setVerified(true);
-    } else {
-      setVerified(false);
-      alert("Verification failed! Try typing 'react'.");
-    }
+  const [selectedTopic, setSelectedTopic] = useState(null);
+  const [count, setCount] = useState(0);
+
+  const handleSelectTopic = (topic) => {
+    setSelectedTopic(topic);
+    setCount(0);
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-blue-50 to-blue-200 text-gray-800">
-      <div className="flex gap-6 mb-6">
-        <a href="https://vite.dev" target="_blank" rel="noopener noreferrer">
-          <img src={viteLogo} className="logo w-20 hover:scale-110 transition" alt="Vite logo" />
-        </a>
+    <div style={{ padding: "20px", fontFamily: "Arial" }}>
+      <h1>📘 React Tutorial Topics</h1>
 
-        <a href="https://react.dev" target="_blank" rel="noopener noreferrer">
-          <img src={reactLogo} className="logo react w-20 hover:scale-110 transition" alt="React logo" />
-        </a>
-      </div>
+      <ul>
+        {topics.map((topic) => (
+          <li key={topic.id} style={{ marginBottom: "10px", cursor: "pointer" }}>
+            <button onClick={() => handleSelectTopic(topic)} style={{ padding: "8px 12px" }}>
+              {topic.title}
+            </button>
+          </li>
+        ))}
+      </ul>
 
-      <h1 className="text-4xl font-bold mb-4">Vite + React</h1>
+      {selectedTopic && (
+        <div style={{ marginTop: "20px", padding: "15px", border: "1px solid #ccc", borderRadius: "8px" }}>
+          <h2>{selectedTopic.title}</h2>
+          <p>{selectedTopic.description}</p>
 
-      <div className="card bg-white rounded-2xl shadow-lg p-6 text-center w-80">
-        <button
-          onClick={() => setCount((count) => count + 1)}
-          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg mb-4 transition"
-        >
-          count is {count}
-        </button>
-        <p className="text-gray-500 text-sm">
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-
-      <div className="verify-section mt-8 bg-white p-6 rounded-2xl shadow-md w-80 text-center">
-        <h2 className="text-xl font-semibold mb-2">Verification</h2>
-        <p className="text-sm text-gray-600 mb-3">
-          Type <code>react</code> below and click verify 👇
-        </p>
-        <input
-          type="text"
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          className="border border-gray-300 rounded-lg px-3 py-2 w-full mb-3 focus:outline-none focus:ring-2 focus:ring-blue-400"
-          placeholder="Enter verification text"
-        />
-        <button
-          onClick={handleVerify}
-          className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-lg transition"
-        >
-          Verify
-        </button>
-
-        {verified && (
-          <p className="text-green-600 font-semibold mt-3">✅ Verified Successfully!</p>
-        )}
-      </div>
-
-      <p className="read-the-docs text-gray-600 mt-6 text-sm">
-        Click on the Vite and React logos to learn more
-      </p>
+          <div style={{ marginTop: "15px" }}>
+            <h3>Counter Example</h3>
+            <p>Count: {count}</p>
+            <button onClick={() => setCount(count + 1)} style={{ marginRight: "10px" }}>➕ Increase</button>
+            <button onClick={() => setCount(count - 1)} style={{ marginRight: "10px" }}>➖ Decrease</button>
+            <button onClick={() => setCount(0)}>🔁 Reset</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
+
 
 export default App;
